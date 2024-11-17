@@ -13,7 +13,7 @@ public class DefaultMapGenerator implements IMapGenerator {
 
     public DefaultMapGenerator() {
         // Define danger and safe tiles
-        this.dangerTiles = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 13, 17, 18, 20, 22, 25, 26, 27, 34, 41, 44, 45, 46, 50, 53, 55, 56, 57, 58, 62, 65);
+        this.dangerTiles = Arrays.asList(1);
         this.safeTiles = Arrays.asList(19, 29, 37, 54, 60, 63);
     }
 

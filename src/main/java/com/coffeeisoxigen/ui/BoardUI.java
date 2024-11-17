@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
@@ -64,7 +65,7 @@ public class BoardUI extends JFrame {
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
                 Tile tile = board.getTile(x, y);
-                TilePanel tilePanel = new TilePanel(tile);
+                TilePanel tilePanel = new TilePanel(tile, x, y);
                 boardPanel.add(tilePanel);
                 tile.addPropertyChangeListener(tilePanel);
             }
@@ -85,7 +86,7 @@ public class BoardUI extends JFrame {
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
                 Tile tile = board.getTile(x, y);
-                TilePanel tilePanel = new TilePanel(tile);
+                TilePanel tilePanel = new TilePanel(tile, x, y);
                 boardPanel.add(tilePanel);
                 tile.addPropertyChangeListener(tilePanel);
             }
@@ -97,7 +98,7 @@ public class BoardUI extends JFrame {
     private class TilePanel extends JPanel implements PropertyChangeListener {
         private Tile tile;
 
-        public TilePanel(Tile tile) {
+        public TilePanel(Tile tile, int x, int y) {
             this.tile = tile;
 
             // Background color of the tile
@@ -106,6 +107,14 @@ public class BoardUI extends JFrame {
             // Border for the Tile
             setBorder(new LineBorder(Color.BLACK, 1)); // Thin black line
             setPreferredSize(new Dimension(50, 50));
+
+            // Add label with newline and center alignment
+            JLabel label = new JLabel("<html>"
+                    + (x * board.getHeight() + y + 1)
+                    + "<br>(" + x + "," + y + ")</html>");
+            label.setHorizontalAlignment(JLabel.CENTER); // Center horizontally
+            label.setVerticalAlignment(JLabel.CENTER); // Center vertically
+            add(label);
         }
 
         @Override
