@@ -1,13 +1,16 @@
 package com.coffeeisoxigen;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import javax.swing.SwingUtilities;
+
+import com.coffeeisoxigen.model.board.Board;
+import com.coffeeisoxigen.model.board.BoardFactory;
+import com.coffeeisoxigen.ui.BoardUI;
+
+public class App {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Board board = BoardFactory.createBoard(1, 1);
+            BoardUI BoardUI = new BoardUI(board);
+        });
     }
 }
