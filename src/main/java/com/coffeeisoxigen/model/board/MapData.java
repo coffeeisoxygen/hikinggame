@@ -2,12 +2,11 @@ package com.coffeeisoxigen.model.board;
 
 import java.util.List;
 
-import com.coffeeisoxigen.model.tile.TileData;
-
 public class MapData {
     private String mapName;
     private int mapRows;
     private int mapCols;
+    private boolean isProtected;
     private List<TileData> tiles;
 
     // Getters and setters
@@ -33,6 +32,14 @@ public class MapData {
 
     public void setMapCols(int mapCols) {
         this.mapCols = mapCols;
+    }
+
+    public boolean isProtected() {
+        return isProtected;
+    }
+
+    public void setProtected(boolean isProtected) {
+        this.isProtected = isProtected;
     }
 
     public List<TileData> getTiles() {

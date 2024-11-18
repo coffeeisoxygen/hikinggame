@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.model.tile;
+package com.coffeeisoxigen.model.board;
 
 import com.coffeeisoxigen.utils.Point;
 

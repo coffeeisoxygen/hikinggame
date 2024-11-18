@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.model.tile;
+package com.coffeeisoxigen.model.board;
 
 public enum ETileType {
     SAFE,

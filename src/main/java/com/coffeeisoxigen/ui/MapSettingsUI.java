@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import com.coffeeisoxigen.model.tile.ETileType;
+import com.coffeeisoxigen.model.board.ETileType;
 
 public class MapSettingsUI extends JFrame {
     private JTextField widthField;

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public interface IMapCreatable {
-    void createMap(int width, int height, String name, String color);
+    void createMap(String name, int width, int height, boolean isProtected);
 
     Board loadMap(File file) throws IOException;
 }

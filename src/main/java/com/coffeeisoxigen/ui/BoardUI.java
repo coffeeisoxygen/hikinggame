@@ -10,7 +10,7 @@ import java.io.IOException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.MapGenerator;
-import com.coffeeisoxigen.model.tile.Tile;
+import com.coffeeisoxigen.model.board.Tile;
 
 public class BoardUI extends JFrame {
     private Board board;

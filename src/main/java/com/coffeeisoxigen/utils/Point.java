@@ -24,10 +24,6 @@ public class Point {
         this.posY += dy;
     }
 
-    public boolean equals(Point other) {
-        return this.posX == other.posX && this.posY == other.posY;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -38,13 +34,11 @@ public class Point {
         return posX == point.posX && posY == point.posY;
     }
 
-    // hashCode() untuk mendukung struktur hash-based
     @Override
     public int hashCode() {
         return Objects.hash(posX, posY);
     }
 
-    // toString() untuk debug/logging
     @Override
     public String toString() {
         return "Point{" + "x=" + posX + ", y=" + posY + '}';
