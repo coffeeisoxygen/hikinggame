@@ -7,6 +7,7 @@ public class TileData {
     private String type;
     private String color;
     private String image;
+    private int index; // Add index property
 
     // Getters and setters
     public int getX() {
@@ -55,5 +56,13 @@ public class TileData {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getIndex() {
+        return index; // Getter for index
+    }
+
+    public void setIndex(int index) {
+        this.index = index; // Setter for index
     }
 }

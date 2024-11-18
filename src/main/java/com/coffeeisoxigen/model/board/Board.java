@@ -9,6 +9,7 @@ public class Board {
     private boolean isProtected;
     private Tile[][] tiles;
 
+    // Konstruktor Board
     public Board(String name, int width, int height, boolean isProtected) {
         this.name = name;
         this.width = width;
@@ -18,7 +19,9 @@ public class Board {
         initializeDefaultTiles();
     }
 
+    // Menginisialisasi Tiles Default
     private void initializeDefaultTiles() {
+        int index = 0;
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 ETileType type = ETileType.NORMAL;
@@ -27,11 +30,12 @@ public class Board {
                 } else if (x == width - 1 && y == height - 1) {
                     type = ETileType.END;
                 }
-                tiles[x][y] = new Tile("Tile" + x + y, type, new Point(x, y), "#808080", "image.png");
+                tiles[x][y] = new Tile("Tile" + x + y, type, new Point(x, y), "#808080", "image.png", index++);
             }
         }
     }
 
+    // Getter dan Setter
     public String getName() {
         return name;
     }

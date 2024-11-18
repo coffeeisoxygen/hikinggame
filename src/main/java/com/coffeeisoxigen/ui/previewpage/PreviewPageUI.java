@@ -2,12 +2,14 @@ package com.coffeeisoxigen.ui.previewpage;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.Tile;
-import com.coffeeisoxigen.ui.landingpage.LandingPageUI;
+import com.coffeeisoxigen.ui.landingpage.UIMainLandingPage;
 import com.coffeeisoxigen.ui.playingpage.PlayingPageUI;
 
 public class PreviewPageUI extends JFrame {
@@ -42,7 +44,7 @@ public class PreviewPageUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(PreviewPageUI.this,
                         "Default map cannot be changed. Redirecting to landing page.");
-                LandingPageUI landingPageUI = new LandingPageUI();
+                UIMainLandingPage landingPageUI = new UIMainLandingPage();
                 landingPageUI.setVisible(true);
                 dispose();
             }

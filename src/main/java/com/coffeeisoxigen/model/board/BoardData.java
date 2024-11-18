@@ -2,7 +2,7 @@ package com.coffeeisoxigen.model.board;
 
 import java.util.List;
 
-public class MapData {
+public class BoardData {
     private String mapName;
     private int mapRows;
     private int mapCols;
