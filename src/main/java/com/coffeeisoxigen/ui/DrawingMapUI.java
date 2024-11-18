@@ -18,17 +18,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.Timer;
 
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.ETileType;
 import com.coffeeisoxigen.model.board.MapGenerator;
 
 public class DrawingMapUI extends JFrame {
-    private JTextField widthField;
-    private JTextField heightField;
-    private JTextField nameField;
-    private JPanel previewPanel;
-    private JPanel legendPanel;
+    private JTextField widthField, heightField, nameField;
+    private JPanel previewPanel, legendPanel;
     private Map<ETileType, Color> tileColors;
     private Board board;
     private JButton generateButton;
@@ -45,7 +43,6 @@ public class DrawingMapUI extends JFrame {
         add(createBottomPanel(), BorderLayout.SOUTH);
     }
 
-    // Initialize default colors for tile types
     private void initializeTileColors() {
         tileColors = new HashMap<>();
         for (ETileType type : ETileType.values()) {
@@ -53,25 +50,19 @@ public class DrawingMapUI extends JFrame {
         }
     }
 
-    // Create top panel for inputs
     private JPanel createTopPanel() {
         JPanel topPanel = new JPanel(new GridLayout(2, 4, 5, 5));
-
-        JLabel widthLabel = new JLabel("Width:");
         widthField = new JTextField();
-        JLabel heightLabel = new JLabel("Height:");
         heightField = new JTextField();
-        JLabel nameLabel = new JLabel("Map Name:");
         nameField = new JTextField();
-
         generateButton = new JButton("Generate Map");
         generateButton.addActionListener(e -> generatePreview());
 
-        topPanel.add(widthLabel);
+        topPanel.add(new JLabel("Width:"));
         topPanel.add(widthField);
-        topPanel.add(heightLabel);
+        topPanel.add(new JLabel("Height:"));
         topPanel.add(heightField);
-        topPanel.add(nameLabel);
+        topPanel.add(new JLabel("Map Name:"));
         topPanel.add(nameField);
         topPanel.add(new JLabel()); // Spacer
         topPanel.add(generateButton);
@@ -79,7 +70,6 @@ public class DrawingMapUI extends JFrame {
         return topPanel;
     }
 
-    // Create center panel for preview
     private JPanel createCenterPanel() {
         previewPanel = new JPanel();
         previewPanel.setLayout(new GridLayout(1, 1)); // Placeholder layout
@@ -87,7 +77,6 @@ public class DrawingMapUI extends JFrame {
         return previewPanel;
     }
 
-    // Create bottom panel for legend
     private JPanel createBottomPanel() {
         legendPanel = new JPanel(new FlowLayout());
         legendPanel.setBorder(BorderFactory.createTitledBorder("Legend"));
@@ -103,55 +92,52 @@ public class DrawingMapUI extends JFrame {
         return legendPanel;
     }
 
-    // Generate preview map with animation
     private void generatePreview() {
         int width, height;
         try {
             width = Integer.parseInt(widthField.getText());
             height = Integer.parseInt(heightField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid width or height input.", "Error", JOptionPane.ERROR_MESSAGE);
+            showErrorDialog("Invalid width or height input.");
             return;
         }
 
         String name = nameField.getText();
         if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Map name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+            showErrorDialog("Map name cannot be empty.");
             return;
         }
 
-        // Create board model
+        createBoard(name, width, height);
+        setupPreviewPanel(width, height);
+        startPreviewGeneration(width, height);
+    }
+
+    private void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void createBoard(String name, int width, int height) {
         MapGenerator generator = new MapGenerator();
         generator.createMap(name, width, height, false);
         board = generator.getBoard();
+    }
 
-        // Clear and set grid for preview
+    private void setupPreviewPanel(int width, int height) {
         previewPanel.removeAll();
         previewPanel.setLayout(new GridLayout(height, width));
         previewPanel.revalidate();
         previewPanel.repaint();
+    }
 
-        // SwingWorker for progressive rendering
+    private void startPreviewGeneration(int width, int height) {
         SwingWorker<Void, JPanel> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < width; x++) {
-                        JPanel tilePanel = new JPanel(new BorderLayout());
-                        tilePanel.setBackground(Color.GRAY); // Default color
-                        tilePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-                        // Add label to tile
-                        JLabel tileLabel = new JLabel("(" + x + ", " + y + ")", SwingConstants.CENTER);
-                        tileLabel.setForeground(Color.WHITE); // Adjust contrast
-                        tilePanel.add(tileLabel, BorderLayout.CENTER);
-
+                        JPanel tilePanel = createTilePanel(x, y);
                         publish(tilePanel);
-
-                        try {
-                            Thread.sleep(50); // Simulate animation delay
-                        } catch (InterruptedException ignored) {
-                        }
                     }
                 }
                 return null;
@@ -159,11 +145,18 @@ public class DrawingMapUI extends JFrame {
 
             @Override
             protected void process(java.util.List<JPanel> chunks) {
-                for (JPanel panel : chunks) {
-                    previewPanel.add(panel);
-                    previewPanel.revalidate();
-                    previewPanel.repaint();
-                }
+                Timer timer = new Timer(50, e -> {
+                    if (!chunks.isEmpty()) {
+                        JPanel panel = chunks.remove(0);
+                        previewPanel.add(panel);
+                        previewPanel.revalidate();
+                        previewPanel.repaint();
+                    } else {
+                        ((Timer) e.getSource()).stop();
+                        generateButton.setEnabled(true);
+                    }
+                });
+                timer.start();
             }
 
             @Override
@@ -174,6 +167,18 @@ public class DrawingMapUI extends JFrame {
 
         generateButton.setEnabled(false); // Disable button during generation
         worker.execute(); // Start background task
+    }
+
+    private JPanel createTilePanel(int x, int y) {
+        JPanel tilePanel = new JPanel(new BorderLayout());
+        tilePanel.setBackground(Color.GRAY); // Default color
+        tilePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        JLabel tileLabel = new JLabel("(" + x + ", " + y + ")", SwingConstants.CENTER);
+        tileLabel.setForeground(Color.WHITE); // Adjust contrast
+        tilePanel.add(tileLabel, BorderLayout.CENTER);
+
+        return tilePanel;
     }
 
     public static void main(String[] args) {
