@@ -2,17 +2,13 @@ package com.coffeeisoxigen;
 
 import javax.swing.SwingUtilities;
 
-import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.MapGeneratorDefault;
-import com.coffeeisoxigen.ui.BoardUI;
+import com.coffeeisoxigen.ui.LandingPageUI;
 
 public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            MapGeneratorDefault mapGenerator = new MapGeneratorDefault();
-            Board board = mapGenerator.generateMap(mapGenerator.getDefaultWidth(), mapGenerator.getDefaultHeight());
-            BoardUI boardUI = new BoardUI(board);
-            boardUI.setVisible(true);
+            LandingPageUI landingPageUI = new LandingPageUI();
+            landingPageUI.setVisible(true);
         });
     }
 }
