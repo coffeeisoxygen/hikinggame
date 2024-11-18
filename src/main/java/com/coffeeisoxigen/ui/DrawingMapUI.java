@@ -7,7 +7,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -77,11 +76,6 @@ public class DrawingMapUI extends JFrame {
         topPanel.add(new JLabel()); // Spacer
         topPanel.add(generateButton);
 
-        // JCheckBox showLabelCheckbox = new JCheckBox("Show Labels");
-        // showLabelCheckbox.setSelected(true);
-        // showLabelCheckbox.addActionListener(e -> generatePreview());
-        // topPanel.add(showLabelCheckbox);
-
         return topPanel;
     }
 
@@ -134,8 +128,10 @@ public class DrawingMapUI extends JFrame {
         // Clear and set grid for preview
         previewPanel.removeAll();
         previewPanel.setLayout(new GridLayout(height, width));
+        previewPanel.revalidate();
+        previewPanel.repaint();
 
-        // SwingWorker for progressive rendering with labels
+        // SwingWorker for progressive rendering
         SwingWorker<Void, JPanel> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
@@ -172,16 +168,12 @@ public class DrawingMapUI extends JFrame {
 
             @Override
             protected void done() {
-                try {
-                    get(); // Wait for completion
-                } catch (InterruptedException | ExecutionException ignored) {
-                }
                 generateButton.setEnabled(true);
             }
         };
 
         generateButton.setEnabled(false); // Disable button during generation
-        worker.execute();
+        worker.execute(); // Start background task
     }
 
     public static void main(String[] args) {
