@@ -1,8 +1,14 @@
-package com.coffeeisoxigen.ui;
+package com.coffeeisoxigen.ui.drawingpage;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.Map;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import com.coffeeisoxigen.model.board.ETileType;
 
 public class DrawPageLegendPanel extends JPanel {

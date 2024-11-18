@@ -1,7 +1,9 @@
-package com.coffeeisoxigen.ui;
+package com.coffeeisoxigen.ui.drawingpage;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 
 public class DrawPageCenterPanel extends JPanel {
     public DrawPageCenterPanel() {

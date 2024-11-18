@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.ui;
+package com.coffeeisoxigen.ui.landingpage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,6 +20,8 @@ import javax.swing.SwingUtilities;
 
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.MapGenerator;
+import com.coffeeisoxigen.ui.drawingpage.DrawingPageUI;
+import com.coffeeisoxigen.ui.previewpage.PreviewUI;
 
 public class LandingPageUI extends JFrame {
     public LandingPageUI() {
@@ -59,7 +61,7 @@ public class LandingPageUI extends JFrame {
 
         // Button actions
         createMapButton.addActionListener((ActionEvent e) -> {
-            DrawingMapUI mapSettingsUI = new DrawingMapUI();
+            DrawingPageUI mapSettingsUI = new DrawingPageUI();
             mapSettingsUI.setVisible(true);
             dispose();
         });

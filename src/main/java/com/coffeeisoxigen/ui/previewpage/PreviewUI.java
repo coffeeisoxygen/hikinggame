@@ -1,26 +1,22 @@
-package com.coffeeisoxigen.ui;
+package com.coffeeisoxigen.ui.previewpage;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.Tile;
+import com.coffeeisoxigen.ui.landingpage.LandingPageUI;
+import com.coffeeisoxigen.ui.playingpage.PlayingPageUI;
 
-public class PlayingPageUI extends JFrame {
+public class PreviewUI extends JFrame {
     private Board board;
     private JPanel boardPanel;
 
-    public PlayingPageUI(Board board) {
+    public PreviewUI(Board board) {
         this.board = board;
-        setTitle("Game Board");
+        setTitle("Map Preview");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -28,6 +24,34 @@ public class PlayingPageUI extends JFrame {
         boardPanel = new JPanel();
         boardPanel.setLayout(new GridBagLayout());
         add(boardPanel, BorderLayout.CENTER);
+
+        JButton okButton = new JButton("OK");
+        JButton cancelButton = new JButton("Cancel");
+
+        okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlayingPageUI playingPageUI = new PlayingPageUI(board);
+                playingPageUI.setVisible(true);
+                dispose();
+            }
+        });
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(PreviewUI.this,
+                        "Default map cannot be changed. Redirecting to landing page.");
+                LandingPageUI landingPageUI = new LandingPageUI();
+                landingPageUI.setVisible(true);
+                dispose();
+            }
+        });
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(okButton);
+        buttonPanel.add(cancelButton);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         initializeBoardPanel();
     }

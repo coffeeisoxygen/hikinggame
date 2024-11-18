@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.ui;
+package com.coffeeisoxigen.ui.drawingpage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,14 +20,14 @@ import com.coffeeisoxigen.model.board.ETileType;
 import com.coffeeisoxigen.model.board.MapGenerator;
 import com.coffeeisoxigen.model.board.Tile;
 
-public class DrawingMapUI extends JFrame {
+public class DrawingPageUI extends JFrame {
     private DrawPageTopPanel topPanel;
     private DrawPageCenterPanel centerPanel;
     private DrawPageLegendPanel legendPanel;
     private Map<ETileType, Color> tileColors;
     private Board board;
 
-    public DrawingMapUI() {
+    public DrawingPageUI() {
         setTitle("Map Creator");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,7 +133,7 @@ public class DrawingMapUI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            DrawingMapUI ui = new DrawingMapUI();
+            DrawingPageUI ui = new DrawingPageUI();
             ui.setVisible(true);
         });
     }

@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.ui;
+package com.coffeeisoxigen.ui.drawingpage;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;

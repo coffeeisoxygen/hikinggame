@@ -2,7 +2,7 @@ package com.coffeeisoxigen;
 
 import javax.swing.SwingUtilities;
 
-import com.coffeeisoxigen.ui.LandingPageUI;
+import com.coffeeisoxigen.ui.landingpage.LandingPageUI;
 
 public class App {
     public static void main(String[] args) {
