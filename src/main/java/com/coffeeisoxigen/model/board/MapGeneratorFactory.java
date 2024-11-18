@@ -7,8 +7,8 @@ public class MapGeneratorFactory {
     private static final Map<String, IMapGenerator> generators = new HashMap<>();
 
     static {
-        generators.put("Default", new DefaultMapGenerator());
-        generators.put("Custom", new CustomMapGenerator());
+        generators.put("Default", new MapGeneratorBasic());
+        generators.put("Custom", new MapGeneratorCustom());
         // Add more generators as needed
     }
 

@@ -1,24 +1,18 @@
 package com.coffeeisoxigen.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.border.EmptyBorder;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.MapGeneratorFactory;
+import com.coffeeisoxigen.model.board.MapGeneratorBasic;
+import com.coffeeisoxigen.model.board.MapGeneratorCustom;
 import com.coffeeisoxigen.model.tile.Tile;
 
 public class BoardUI extends JFrame {
@@ -28,6 +22,7 @@ public class BoardUI extends JFrame {
 
     public BoardUI(Board board) {
         this.board = board;
+        setLayout(new BorderLayout());
         initializeUI();
     }
 
@@ -40,63 +35,75 @@ public class BoardUI extends JFrame {
         controlPanel = new JPanel();
         JButton startButton = new JButton("Start");
         JButton importMapButton = new JButton("Import Map");
-        String[] mapTypes = MapGeneratorFactory.getAvailableMapTypes();
-        JComboBox<String> mapTypeComboBox = new JComboBox<>(mapTypes);
 
-        mapTypeComboBox.addActionListener(new ActionListener() {
+        importMapButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selectedMapType = (String) mapTypeComboBox.getSelectedItem();
-                int width = MapGeneratorFactory.getDefaultWidth(selectedMapType);
-                int height = MapGeneratorFactory.getDefaultHeight(selectedMapType);
-                board = MapGeneratorFactory.createMap(selectedMapType, width, height);
-                updateBoardPanel();
+                importMap();
             }
         });
 
         controlPanel.add(startButton);
         controlPanel.add(importMapButton);
-        controlPanel.add(mapTypeComboBox);
 
-        // Board Panel (Bottom)
-        boardPanel = new JPanel(new GridLayout(board.getWidth(), board.getHeight())); // without spacing
-        boardPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // padding around the panel
+        add(controlPanel, BorderLayout.NORTH);
 
-        for (int x = 0; x < board.getWidth(); x++) {
-            for (int y = 0; y < board.getHeight(); y++) {
-                Tile tile = board.getTile(x, y);
-                TilePanel tilePanel = new TilePanel(tile, x, y);
-                boardPanel.add(tilePanel);
-                tile.addPropertyChangeListener(tilePanel);
-            }
-        }
+        // Board Panel (Center)
+        boardPanel = new JPanel();
+        boardPanel.setLayout(new GridBagLayout());
+        initializeBoardPanel();
 
-        // SplitPane to divide the screen
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, controlPanel, boardPanel);
-        splitPane.setDividerLocation(50); // Height of the top panel
-        splitPane.setResizeWeight(0.1); // Proportion of size (10% top, 90% bottom)
-
-        add(splitPane);
-        setVisible(true);
+        add(boardPanel, BorderLayout.CENTER);
     }
 
-    private void updateBoardPanel() {
+    private void initializeBoardPanel() {
         boardPanel.removeAll();
-        boardPanel.setLayout(new GridLayout(board.getWidth(), board.getHeight()));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
                 Tile tile = board.getTile(x, y);
-                TilePanel tilePanel = new TilePanel(tile, x, y);
-                boardPanel.add(tilePanel);
-                tile.addPropertyChangeListener(tilePanel);
+                gbc.gridx = x;
+                gbc.gridy = y;
+                boardPanel.add(new TilePanel(tile, x, y), gbc);
             }
         }
         boardPanel.revalidate();
         boardPanel.repaint();
     }
 
-    private class TilePanel extends JPanel implements PropertyChangeListener {
-        private Tile tile;
+    private void importMap() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Map Files", "map"));
+        int returnValue = fileChooser.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                board = loadBoardFromFile(selectedFile);
+                initializeBoardPanel();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error loading map: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private Board loadBoardFromFile(File file) throws IOException {
+        // Implement the logic to load the board from the file
+        // This is a placeholder implementation
+        // You need to replace this with actual file reading logic
+        int width = 6; // Example width
+        int height = 12; // Example height
+        Board board = new Board(width, height);
+        // Populate the board with tiles from the file
+        return board;
+    }
+
+    private class TilePanel extends JPanel {
+        private final Tile tile;
 
         public TilePanel(Tile tile, int x, int y) {
             this.tile = tile;
@@ -110,19 +117,11 @@ public class BoardUI extends JFrame {
 
             // Add label with newline and center alignment
             JLabel label = new JLabel("<html>"
-                    + (x * board.getHeight() + y + 1)
+                    + (x * board.getWidth() + y)
                     + "<br>(" + x + "," + y + ")</html>");
             label.setHorizontalAlignment(JLabel.CENTER); // Center horizontally
             label.setVerticalAlignment(JLabel.CENTER); // Center vertically
             add(label);
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if ("color".equals(evt.getPropertyName())) {
-                setBackground(Color.decode((String) evt.getNewValue()));
-                repaint();
-            }
         }
     }
 }

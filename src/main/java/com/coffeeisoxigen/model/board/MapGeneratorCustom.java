@@ -4,7 +4,7 @@ import com.coffeeisoxigen.model.tile.ETileType;
 import com.coffeeisoxigen.model.tile.Tile;
 import com.coffeeisoxigen.utils.Point;
 
-public class CustomMapGenerator implements IMapGenerator {
+public class MapGeneratorCustom implements IMapGenerator {
     @Override
     public Board generateMap(int width, int height) {
         Board board = new Board(width, height);
@@ -12,7 +12,8 @@ public class CustomMapGenerator implements IMapGenerator {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 ETileType tileType = determineTileType(x, y);
-                board.setTile(x, y, new Tile("Tile" + x + y, tileType, new Point(x, y), tileType.getColor(), "image.png"));
+                board.setTile(x, y,
+                        new Tile("Tile" + x + y, tileType, new Point(x, y), tileType.getColor(), "image.png"));
             }
         }
         return board;

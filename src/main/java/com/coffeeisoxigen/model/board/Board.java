@@ -27,6 +27,7 @@ public class Board {
     }
 
     public boolean isInMap(Point point) {
-        return point.getX() >= 0 && point.getX() < tiles.length && point.getY() >= 0 && point.getY() < tiles[0].length;
+        return point.getPosX() >= 0 && point.getPosX() < tiles.length && point.getPosY() >= 0
+                && point.getPosY() < tiles[0].length;
     }
 }
