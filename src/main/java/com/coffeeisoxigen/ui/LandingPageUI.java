@@ -13,16 +13,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
 
 public class LandingPageUI extends JFrame {
     public LandingPageUI() {
         setTitle("Landing Page");
         setSize(500, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null); // Center the window
         // set resize
         setResizable(false);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                confirmExit();
+            }
+        });
 
         // Header Panel
         JPanel headerPanel = new JPanel();
@@ -64,7 +72,7 @@ public class LandingPageUI extends JFrame {
         });
 
         exitButton.addActionListener((ActionEvent e) -> {
-            System.exit(0);
+            confirmExit();
         });
 
         // Add buttons to the button panel
@@ -76,6 +84,14 @@ public class LandingPageUI extends JFrame {
         // Add panels to the frame
         add(headerPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
+    }
+
+    private void confirmExit() {
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Confirm Exit",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }
 
     // Helper method to create styled buttons
