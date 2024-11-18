@@ -10,11 +10,11 @@ import com.coffeeisoxigen.model.board.Tile;
 import com.coffeeisoxigen.ui.landingpage.LandingPageUI;
 import com.coffeeisoxigen.ui.playingpage.PlayingPageUI;
 
-public class PreviewUI extends JFrame {
+public class PreviewPageUI extends JFrame {
     private Board board;
     private JPanel boardPanel;
 
-    public PreviewUI(Board board) {
+    public PreviewPageUI(Board board) {
         this.board = board;
         setTitle("Map Preview");
         setSize(800, 600);
@@ -40,7 +40,7 @@ public class PreviewUI extends JFrame {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(PreviewUI.this,
+                JOptionPane.showMessageDialog(PreviewPageUI.this,
                         "Default map cannot be changed. Redirecting to landing page.");
                 LandingPageUI landingPageUI = new LandingPageUI();
                 landingPageUI.setVisible(true);

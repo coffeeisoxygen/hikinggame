@@ -20,8 +20,9 @@ public class DrawPageLegendPanel extends JPanel {
             JPanel legendItem = new JPanel();
             legendItem.setPreferredSize(new Dimension(30, 30));
             legendItem.setBackground(tileColors.get(type));
-            add(new JLabel(type.name()));
+            
             add(legendItem);
+            add(new JLabel(type.name()));
         }
     }
 }

@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.MapGenerator;
 import com.coffeeisoxigen.ui.drawingpage.DrawingPageUI;
-import com.coffeeisoxigen.ui.previewpage.PreviewUI;
+import com.coffeeisoxigen.ui.previewpage.PreviewPageUI;
 
 public class LandingPageUI extends JFrame {
     public LandingPageUI() {
@@ -70,7 +70,7 @@ public class LandingPageUI extends JFrame {
             MapGenerator mapGenerator = new MapGenerator();
             mapGenerator.createMap("Default Map", 10, 10, true);
             Board board = mapGenerator.getBoard();
-            PreviewUI previewUI = new PreviewUI(board);
+            PreviewPageUI previewUI = new PreviewPageUI(board);
             previewUI.setVisible(true);
             dispose();
         });
@@ -84,7 +84,7 @@ public class LandingPageUI extends JFrame {
                 try {
                     MapGenerator mapGenerator = new MapGenerator();
                     Board board = mapGenerator.loadMap(selectedFile);
-                    PreviewUI previewUI = new PreviewUI(board);
+                    PreviewPageUI previewUI = new PreviewPageUI(board);
                     previewUI.setVisible(true);
                     dispose();
                 } catch (IOException ex) {
