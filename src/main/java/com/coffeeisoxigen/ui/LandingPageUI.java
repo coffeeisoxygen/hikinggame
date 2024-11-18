@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -84,7 +85,7 @@ public class LandingPageUI extends JFrame {
                     PreviewUI previewUI = new PreviewUI(board);
                     previewUI.setVisible(true);
                     dispose();
-                } catch (Exception ex) {
+                } catch (IOException ex) {
                     JOptionPane.showMessageDialog(this, "Error loading map: " + ex.getMessage(), "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
