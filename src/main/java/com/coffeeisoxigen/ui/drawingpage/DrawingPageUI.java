@@ -125,7 +125,7 @@ public class DrawingPageUI extends JFrame {
         tilePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         JLabel tileLabel = new JLabel("(" + x + ", " + y + ")", SwingConstants.CENTER);
-        tileLabel.setForeground(Color.WHITE); // Adjust contrast
+        tileLabel.setForeground(Color.BLACK); // Adjust contrast
         tilePanel.add(tileLabel, BorderLayout.CENTER);
 
         return tilePanel;

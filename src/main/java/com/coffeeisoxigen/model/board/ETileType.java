@@ -12,7 +12,7 @@ public enum ETileType {
     public Color getDefaultColor() {
         switch (this) {
             case SAFE:
-                return Color.GREEN;
+                return Color.blue;
             case DANGER:
                 return Color.RED;
             case START:
