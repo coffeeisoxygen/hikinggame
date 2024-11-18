@@ -6,9 +6,11 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -71,7 +73,22 @@ public class LandingPageUI extends JFrame {
         });
 
         loadSavedMapButton.addActionListener((ActionEvent e) -> {
-            // Implement loading saved map logic here
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("JSON Files", "json"));
+            int returnValue = fileChooser.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                try {
+                    MapGenerator mapGenerator = new MapGenerator();
+                    Board board = mapGenerator.loadMap(selectedFile);
+                    PreviewUI previewUI = new PreviewUI(board);
+                    previewUI.setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error loading map: " + ex.getMessage(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
         });
 
         exitButton.addActionListener((ActionEvent e) -> {
