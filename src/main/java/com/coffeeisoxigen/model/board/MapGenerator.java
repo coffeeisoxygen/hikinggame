@@ -35,14 +35,14 @@ public class MapGenerator implements IMapCreatable {
     public Board loadMap(File file) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         MapData mapData = mapper.readValue(file, MapData.class);
-        Board board = new Board(mapData.getMapName(), mapData.getMapRows(), mapData.getMapCols(),
+        Board loadedBoard = new Board(mapData.getMapName(), mapData.getMapRows(), mapData.getMapCols(),
                 mapData.isProtected());
         for (TileData tileData : mapData.getTiles()) {
             Tile tile = new Tile(tileData.getName(), ETileType.valueOf(tileData.getType()),
                     new Point(tileData.getX(), tileData.getY()), tileData.getColor(), tileData.getImage());
-            board.setTile(tileData.getX(), tileData.getY(), tile);
+            loadedBoard.setTile(tileData.getX(), tileData.getY(), tile);
         }
-        return board;
+        return loadedBoard;
     }
 
     public Board getBoard() {

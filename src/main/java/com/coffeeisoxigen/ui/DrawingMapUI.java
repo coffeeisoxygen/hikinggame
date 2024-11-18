@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 
 import com.coffeeisoxigen.model.board.ETileType;
 
-public class MapSettingsUI extends JFrame {
+public class DrawingMapUI extends JFrame {
     private JTextField widthField;
     private JTextField heightField;
     private JPanel previewPanel;
@@ -32,7 +32,7 @@ public class MapSettingsUI extends JFrame {
     private JComboBox<ETileType> tileTypeDropdown;
     private JButton colorPickerButton;
 
-    public MapSettingsUI() {
+    public DrawingMapUI() {
         setTitle("Map Settings");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,22 +150,23 @@ public class MapSettingsUI extends JFrame {
 
     private void startGame(ActionEvent e) {
         // try {
-        //     int width = Integer.parseInt(widthField.getText());
-        //     int height = Integer.parseInt(heightField.getText());
+        // int width = Integer.parseInt(widthField.getText());
+        // int height = Integer.parseInt(heightField.getText());
 
-        //     // Create game board with settings
-        //     BoardUI boardUI = new BoardUI(width, height, "Custom Map", tileColors);
-        //     boardUI.setVisible(true);
-        //     dispose();
+        // // Create game board with settings
+        // BoardUI boardUI = new BoardUI(width, height, "Custom Map", tileColors);
+        // boardUI.setVisible(true);
+        // dispose();
         // } catch (NumberFormatException ex) {
-        //     JOptionPane.showMessageDialog(this, "Width and Height must be valid integers.", "Error",
-        //             JOptionPane.ERROR_MESSAGE);
+        // JOptionPane.showMessageDialog(this, "Width and Height must be valid
+        // integers.", "Error",
+        // JOptionPane.ERROR_MESSAGE);
         // }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            MapSettingsUI mapSettingsUI = new MapSettingsUI();
+            DrawingMapUI mapSettingsUI = new DrawingMapUI();
             mapSettingsUI.setVisible(true);
         });
     }

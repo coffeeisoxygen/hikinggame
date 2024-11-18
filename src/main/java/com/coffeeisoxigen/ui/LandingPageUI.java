@@ -11,9 +11,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.JOptionPane;
+
+import com.coffeeisoxigen.model.board.Board;
+import com.coffeeisoxigen.model.board.MapGenerator;
 
 public class LandingPageUI extends JFrame {
     public LandingPageUI() {
@@ -22,7 +25,6 @@ public class LandingPageUI extends JFrame {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null); // Center the window
-        // set resize
         setResizable(false);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -54,21 +56,22 @@ public class LandingPageUI extends JFrame {
 
         // Button actions
         createMapButton.addActionListener((ActionEvent e) -> {
-            MapSettingsUI mapSettingsUI = new MapSettingsUI();
+            DrawingMapUI mapSettingsUI = new DrawingMapUI();
             mapSettingsUI.setVisible(true);
             dispose();
         });
 
         defaultMapButton.addActionListener((ActionEvent e) -> {
-            BoardUI boardUI = new BoardUI();
-            boardUI.setVisible(true);
+            MapGenerator mapGenerator = new MapGenerator();
+            mapGenerator.createMap("Default Map", 10, 10, true);
+            Board board = mapGenerator.getBoard();
+            PreviewUI previewUI = new PreviewUI(board);
+            previewUI.setVisible(true);
             dispose();
         });
 
         loadSavedMapButton.addActionListener((ActionEvent e) -> {
-            BoardUI boardUI = new BoardUI();
-            boardUI.setVisible(true);
-            dispose();
+            // Implement loading saved map logic here
         });
 
         exitButton.addActionListener((ActionEvent e) -> {
