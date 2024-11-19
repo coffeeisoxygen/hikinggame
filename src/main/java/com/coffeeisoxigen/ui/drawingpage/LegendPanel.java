@@ -18,7 +18,5 @@ public class LegendPanel extends JPanel {
 
     public void updateTotalTiles(int totalTiles) {
         totalTilesLabel.setText("Total Tiles: " + totalTiles);
-        revalidate();
-        repaint();
     }
 }

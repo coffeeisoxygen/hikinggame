@@ -1,78 +1,72 @@
 package com.coffeeisoxigen.ui.drawingpage;
 
-import java.awt.BorderLayout;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import com.coffeeisoxigen.controller.BoardController;
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.MapGenerator;
 
 public class DrawingPageUI extends JFrame {
-    private ControlPanel controlPanel;
     private MapPanel mapPanel;
+    private ControlPanel controlPanel;
     private LegendPanel legendPanel;
-    private MapGenerator mapGenerator;
+    private BoardController boardController;
 
-    public DrawingPageUI() {
-        setTitle("Map Creator");
-        setSize(800, 600);
+    public DrawingPageUI(BoardController boardController) {
+        this.boardController = boardController;
+        setTitle("Map Generator");
+        setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
 
-        mapGenerator = new MapGenerator();
+        initUI();
+    }
 
-        // Initialize panels
+    private void initUI() {
+        // Main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
+        // MapPanel
+        mapPanel = new MapPanel(boardController);
+        mainPanel.add(mapPanel, BorderLayout.CENTER);
+
+        // ControlPanel
         controlPanel = new ControlPanel();
-        mapPanel = new MapPanel();
-        legendPanel = new LegendPanel();
-
-        // Add panels to frame
-        add(controlPanel, BorderLayout.WEST);
-        add(mapPanel, BorderLayout.CENTER);
-        add(legendPanel, BorderLayout.SOUTH);
-
-        // Set button actions
-        controlPanel.getGenerateButton().addActionListener(e -> generatePreview());
-        controlPanel.getResetButton().addActionListener(e -> resetBoard());
-    }
-
-    private void generatePreview() {
-        int width, height;
-        try {
-            width = Integer.parseInt(controlPanel.getWidthField().getText());
-            height = Integer.parseInt(controlPanel.getHeightField().getText());
-        } catch (NumberFormatException ex) {
-            showErrorDialog("Invalid width or height input.");
-            return;
-        }
-
-        String name = controlPanel.getNameField().getText();
-        if (name.isEmpty()) {
-            showErrorDialog("Map name cannot be empty.");
-            return;
-        }
-
-        // Create map in backend
-        mapGenerator.createMap(name, width, height);
-        Board board = mapGenerator.getBoard();
-
-        // Update UI
-        mapPanel.updatePreview(board);
-        legendPanel.updateTotalTiles(board.getWidth() * board.getHeight());
-    }
-
-    private void resetBoard() {
-        mapGenerator.resetMap(); // Reset backend
-        mapPanel.updatePreview(null); // Clear UI
-        legendPanel.updateTotalTiles(0);
-    }
-
-    private void showErrorDialog(String message) {
-        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            DrawingPageUI ui = new DrawingPageUI();
-            ui.setVisible(true);
+        controlPanel.getGenerateButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateMap();
+            }
         });
+        controlPanel.getResetButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetMap();
+            }
+        });
+        mainPanel.add(controlPanel, BorderLayout.NORTH);
+
+        // LegendPanel
+        legendPanel = new LegendPanel();
+        mainPanel.add(legendPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
+    }
+
+    private void generateMap() {
+        String name = controlPanel.getNameField().getText();
+        int width = Integer.parseInt(controlPanel.getWidthField().getText());
+        int height = Integer.parseInt(controlPanel.getHeightField().getText());
+        boardController.createCustomMap(name, width, height);
+        mapPanel.renderTiles();
+        legendPanel.updateTotalTiles(boardController.getTotalTiles());
+    }
+
+    private void resetMap() {
+        boardController.resetMap();
+        mapPanel.renderTiles();
+        legendPanel.updateTotalTiles(boardController.getTotalTiles());
     }
 }

@@ -1,5 +1,7 @@
 package com.coffeeisoxigen.controller;
 
+import java.io.File;
+
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.MapGenerator;
 import com.coffeeisoxigen.model.tile.ETileType;
@@ -75,5 +77,10 @@ public class BoardController {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void loadSavedMap(File selectedFile) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadSavedMap'");
     }
 }

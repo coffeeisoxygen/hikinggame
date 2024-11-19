@@ -1,49 +1,50 @@
 package com.coffeeisoxigen.ui.drawingpage;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.util.Map;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.coffeeisoxigen.controller.BoardController;
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.tile.Tile;
+import com.coffeeisoxigen.utils.Point;
 
 public class MapPanel extends JPanel {
-    public MapPanel() {
-        setLayout(new GridLayout(1, 1)); // Default layout (empty)
+    private BoardController boardController;
+
+    public MapPanel(BoardController boardController) {
+        this.boardController = boardController;
+        setBackground(Color.WHITE);
     }
 
-    public void updatePreview(Board board) {
-        removeAll(); // Clear panel
-
+    public void renderTiles() {
+        removeAll();
+        Board board = boardController.getBoard();
         if (board == null) {
-            revalidate();
-            repaint();
-            return; // Nothing to display
+            return;
         }
 
-        setLayout(new GridLayout(board.getHeight(), board.getWidth())); // Update layout
+        setLayout(new GridLayout(board.getHeight(), board.getWidth()));
+        Map<Point, Tile> tiles = board.getTiles();
 
-        Tile[][] tiles = board.getTiles();
-        for (int y = 0; y < board.getHeight(); y++) {
-            for (int x = 0; x < board.getWidth(); x++) {
-                Tile tile = tiles[x][y];
-                JPanel tilePanel = createTilePanel(tile, x, y);
-                add(tilePanel);
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
+                Tile tile = tiles.get(new Point(x, y));
+                if (tile != null) {
+                    JPanel tilePanel = new JPanel();
+                    tilePanel.setBackground(Color.decode(tile.getColor()));
+                    tilePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                    tilePanel.add(new JLabel(tile.getName()));
+                    add(tilePanel);
+                }
             }
         }
 
         revalidate();
         repaint();
-    }
-
-    private JPanel createTilePanel(Tile tile, int x, int y) {
-        JPanel tilePanel = new JPanel();
-        tilePanel.setBackground(tile.getTileType().getDefaultColor());
-        tilePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        JLabel label = new JLabel(String.format("<html>#%d<br>%s<br>(%d,%d)</html>", 
-            tile.getId(), tile.getTileType(), x, y));
-        label.setFont(new Font("Arial", Font.PLAIN, 10));
-        tilePanel.add(label);
-
-        return tilePanel;
     }
 }

@@ -18,7 +18,7 @@ public class MapGenerator implements IMapGenerator {
 
     @Override
     public void createMap() {
-        board = new Board("DefaultMap", 6, 10, true);
+        board = new Board("DefaultMap", 12, 6, true);
         TileLayoutStrategy tileLayoutStrategy = new DefaultTilePlacement();
         tileLayoutStrategy.placeTiles(board, tileFactory);
     }
