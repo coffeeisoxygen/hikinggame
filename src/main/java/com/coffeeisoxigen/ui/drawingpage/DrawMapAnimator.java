@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.ETileType;
-import com.coffeeisoxigen.model.board.Tile;
+import com.coffeeisoxigen.model.tile.ETileType;
+import com.coffeeisoxigen.model.tile.Tile;
 
 public class DrawMapAnimator {
     private DrawPageCenterPanel centerPanel;

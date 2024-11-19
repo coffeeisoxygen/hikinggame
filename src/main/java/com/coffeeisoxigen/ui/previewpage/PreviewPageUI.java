@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.Tile;
-import com.coffeeisoxigen.ui.landingpage.UIMainLandingPage;
+import com.coffeeisoxigen.model.tile.Tile;
+import com.coffeeisoxigen.ui.landingpage.LPMainUI;
 import com.coffeeisoxigen.ui.playingpage.PlayingPageUI;
 
 public class PreviewPageUI extends JFrame {
@@ -44,7 +44,7 @@ public class PreviewPageUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(PreviewPageUI.this,
                         "Default map cannot be changed. Redirecting to landing page.");
-                UIMainLandingPage landingPageUI = new UIMainLandingPage();
+                LPMainUI landingPageUI = new LPMainUI();
                 landingPageUI.setVisible(true);
                 dispose();
             }

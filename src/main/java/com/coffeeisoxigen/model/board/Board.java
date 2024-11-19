@@ -1,5 +1,6 @@
 package com.coffeeisoxigen.model.board;
 
+import com.coffeeisoxigen.model.tile.Tile;
 import com.coffeeisoxigen.utils.Point;
 
 public class Board {
@@ -9,33 +10,15 @@ public class Board {
     private boolean isProtected;
     private Tile[][] tiles;
 
-    // Konstruktor Board
     public Board(String name, int width, int height, boolean isProtected) {
         this.name = name;
         this.width = width;
         this.height = height;
         this.isProtected = isProtected;
         this.tiles = new Tile[width][height];
-        initializeDefaultTiles();
     }
 
-    // Menginisialisasi Tiles Default
-    private void initializeDefaultTiles() {
-        int index = 0;
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                ETileType type = ETileType.NORMAL;
-                if (x == 0 && y == 0) {
-                    type = ETileType.START;
-                } else if (x == width - 1 && y == height - 1) {
-                    type = ETileType.END;
-                }
-                tiles[x][y] = new Tile("Tile" + x + y, type, new Point(x, y), "#808080", "image.png", index++);
-            }
-        }
-    }
-
-    // Getter dan Setter
+    // Getters and setters
     public String getName() {
         return name;
     }

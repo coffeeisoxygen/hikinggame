@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.coffeeisoxigen.model.board.ETileType;
+import com.coffeeisoxigen.model.tile.ETileType;
 
 public class DrawPageLegendPanel extends JPanel {
     private Map<ETileType, Color> tileColors;

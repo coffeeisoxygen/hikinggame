@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.ETileType;
 import com.coffeeisoxigen.model.board.MapGenerator;
+import com.coffeeisoxigen.model.tile.ETileType;
 
 public class DrawingPageLogic {
     private DrawingPageLayout drawingLayout;

@@ -2,12 +2,12 @@ package com.coffeeisoxigen;
 
 import javax.swing.SwingUtilities;
 
-import com.coffeeisoxigen.ui.landingpage.UIMainLandingPage;
+import com.coffeeisoxigen.ui.landingpage.LPMainUI;
 
 public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            UIMainLandingPage landingPageUI = new UIMainLandingPage();
+            LPMainUI landingPageUI = new LPMainUI();
             landingPageUI.setVisible(true);
         });
     }

@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.model.board;
+package com.coffeeisoxigen.model.tile;
 
 public class TileData {
     private int x;

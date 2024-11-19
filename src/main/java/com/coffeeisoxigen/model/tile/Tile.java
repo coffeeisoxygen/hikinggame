@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.model.board;
+package com.coffeeisoxigen.model.tile;
 
 import com.coffeeisoxigen.utils.Point;
 
@@ -7,16 +7,12 @@ public class Tile {
     private ETileType tileType;
     private Point position;
     private String color;
-    private String image;
-    private int index; // Add index property
 
-    public Tile(String name, ETileType tileType, Point position, String color, String image, int index) {
-        this.name = (name == null || name.isEmpty()) ? "unnamed" : name;
+    public Tile(String name, ETileType tileType, Point position, String color) {
+        this.name = name;
         this.tileType = tileType;
         this.position = position;
         this.color = color;
-        this.image = image;
-        this.index = index; // Initialize index
     }
 
     // Getters and setters
@@ -50,21 +46,5 @@ public class Tile {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public int getIndex() {
-        return index; // Getter for index
-    }
-
-    public void setIndex(int index) {
-        this.index = index; // Setter for index
     }
 }

@@ -2,6 +2,8 @@ package com.coffeeisoxigen.model.board;
 
 import java.util.List;
 
+import com.coffeeisoxigen.model.tile.TileData;
+
 public class BoardData {
     private String mapName;
     private int mapRows;

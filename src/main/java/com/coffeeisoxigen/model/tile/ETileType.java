@@ -1,4 +1,4 @@
-package com.coffeeisoxigen.model.board;
+package com.coffeeisoxigen.model.tile;
 
 import java.awt.Color;
 

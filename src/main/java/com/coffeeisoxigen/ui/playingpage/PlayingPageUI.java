@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.Tile;
+import com.coffeeisoxigen.model.tile.Tile;
 
 public class PlayingPageUI extends JFrame {
     private Board board;

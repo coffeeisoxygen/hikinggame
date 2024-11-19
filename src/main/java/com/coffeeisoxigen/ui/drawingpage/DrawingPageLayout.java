@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.coffeeisoxigen.model.board.ETileType;
+import com.coffeeisoxigen.model.tile.ETileType;
 
 public class DrawingPageLayout {
     private DrawPageTopPanel topPanel;

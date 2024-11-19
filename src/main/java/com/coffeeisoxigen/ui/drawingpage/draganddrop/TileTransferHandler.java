@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
 import com.coffeeisoxigen.model.board.Board;
-import com.coffeeisoxigen.model.board.Tile;
+import com.coffeeisoxigen.model.tile.Tile;
 import com.coffeeisoxigen.utils.Point;
 
 public class TileTransferHandler extends TransferHandler {

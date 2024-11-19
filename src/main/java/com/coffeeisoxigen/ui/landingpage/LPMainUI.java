@@ -5,18 +5,18 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import com.coffeeisoxigen.model.board.IMapCreatable;
+import com.coffeeisoxigen.model.board.IMapGenerator;
 import com.coffeeisoxigen.model.board.MapGenerator;
 
-public class UIMainLandingPage extends JFrame {
-    private IMapCreatable mapGenerator;
-    private LayoutLandingPage landingLayout;
-    private LogicLandingPage landingLogic;
+public class LPMainUI extends JFrame {
+    private IMapGenerator mapGenerator;
+    private LPLayout landingLayout;
+    private LPLogic landingLogic;
 
-    public UIMainLandingPage() {
+    public LPMainUI() {
         mapGenerator = new MapGenerator(); // Use the interface
-        landingLayout = new LayoutLandingPage();
-        landingLogic = new LogicLandingPage(mapGenerator, this);
+        landingLayout = new LPLayout();
+        landingLogic = new LPLogic(mapGenerator, this);
 
         setTitle("Landing Page");
         setSize(500, 400);
@@ -39,7 +39,7 @@ public class UIMainLandingPage extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            UIMainLandingPage landingPageUI = new UIMainLandingPage();
+            LPMainUI landingPageUI = new LPMainUI();
             landingPageUI.setVisible(true);
         });
     }
