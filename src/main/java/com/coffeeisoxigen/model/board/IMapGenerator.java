@@ -6,7 +6,7 @@ import java.io.IOException;
 public interface IMapGenerator {
     void createMap(); // Create a default map
 
-    void createMap(String name, int width, int height, boolean isProtected); // Create a custom map
+    void createMap(String name, int width, int height); // Create a custom map
 
     void loadSavedMap(File file) throws IOException; // Load a map from a file
 

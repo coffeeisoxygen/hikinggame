@@ -29,8 +29,8 @@ public class MapGenerator implements IMapGenerator {
     }
 
     @Override
-    public void createMap(String name, int width, int height, boolean isProtected) {
-        board = new Board(name, width, height, isProtected);
+    public void createMap(String name, int width, int height) {
+        board = new Board(name, width, height, false);
         TileLayoutStrategy tileLayoutStrategy = new CustomTilePlacement();
         tileLayoutStrategy.placeTiles(board, tileFactory);
     }

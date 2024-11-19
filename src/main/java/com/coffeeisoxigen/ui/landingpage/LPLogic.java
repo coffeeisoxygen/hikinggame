@@ -37,7 +37,7 @@ public class LPLogic {
     }
 
     public void customMapAction(String name, int width, int height, boolean isProtected) {
-        mapGenerator.createMap(name, width, height, isProtected);
+        mapGenerator.createMap(name, width, height);
         Board board = ((MapGenerator) mapGenerator).getBoard();
         PreviewPageUI previewUI = new PreviewPageUI(board);
         previewUI.setVisible(true);

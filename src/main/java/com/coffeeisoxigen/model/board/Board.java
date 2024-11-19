@@ -4,11 +4,11 @@ import com.coffeeisoxigen.model.tile.Tile;
 import com.coffeeisoxigen.utils.Point;
 
 public class Board {
-    private String name;
-    private int width;
-    private int height;
-    private boolean isProtected;
-    private Tile[][] tiles;
+    private final String name;
+    private final int width;
+    private final int height;
+    private final boolean isProtected;
+    private final Tile[][] tiles;
 
     public Board(String name, int width, int height, boolean isProtected) {
         this.name = name;
