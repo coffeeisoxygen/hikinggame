@@ -1,11 +1,7 @@
 package com.coffeeisoxigen.ui.drawingpage;
 
 import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
+import javax.swing.*;
 import com.coffeeisoxigen.model.board.Board;
 import com.coffeeisoxigen.model.board.MapGenerator;
 
@@ -13,7 +9,6 @@ public class DrawingPageUI extends JFrame {
     private ControlPanel controlPanel;
     private MapPanel mapPanel;
     private LegendPanel legendPanel;
-    private Board board;
     private MapGenerator mapGenerator;
 
     public DrawingPageUI() {
@@ -40,11 +35,6 @@ public class DrawingPageUI extends JFrame {
     }
 
     private void generatePreview() {
-        if (board != null) {
-            showErrorDialog("Board already created. Please reset to create a new board.");
-            return;
-        }
-
         int width, height;
         try {
             width = Integer.parseInt(controlPanel.getWidthField().getText());
@@ -60,20 +50,19 @@ public class DrawingPageUI extends JFrame {
             return;
         }
 
-        // Simulate board creation
+        // Create map in backend
         mapGenerator.createMap(name, width, height);
-        mapPanel.updatePreview(name);
-        legendPanel.updateTotalTiles(width * height);
-        controlPanel.getGenerateButton().setEnabled(false);
+        Board board = mapGenerator.getBoard();
+
+        // Update UI
+        mapPanel.updatePreview(board);
+        legendPanel.updateTotalTiles(board.getWidth() * board.getHeight());
     }
 
     private void resetBoard() {
-        board = null;
-        mapPanel.removeAll();
-        mapPanel.revalidate();
-        mapPanel.repaint();
+        mapGenerator.resetMap(); // Reset backend
+        mapPanel.updatePreview(null); // Clear UI
         legendPanel.updateTotalTiles(0);
-        controlPanel.getGenerateButton().setEnabled(true);
     }
 
     private void showErrorDialog(String message) {

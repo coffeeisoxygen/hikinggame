@@ -12,7 +12,7 @@ public interface IMapGenerator {
 
     void resetMap(); // Reset the map to its default state
 
-    void resetMap(String name, int width, int height, boolean isProtected); // Reset the map with specified parameters
+    void resetMap(String name, int width, int height); // Reset the map with specified parameters
 
     int getTotalTiles(); // Get the total number of tiles
 }

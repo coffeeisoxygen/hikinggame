@@ -6,12 +6,7 @@ import java.io.IOException;
 import com.coffeeisoxigen.model.board.strategy.CustomTilePlacement;
 import com.coffeeisoxigen.model.board.strategy.DefaultTilePlacement;
 import com.coffeeisoxigen.model.board.strategy.TileLayoutStrategy;
-import com.coffeeisoxigen.model.tile.ETileType;
-import com.coffeeisoxigen.model.tile.Tile;
-import com.coffeeisoxigen.model.tile.TileData;
 import com.coffeeisoxigen.model.tile.TileFactory;
-import com.coffeeisoxigen.utils.Point;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MapGenerator implements IMapGenerator {
     private Board board;
@@ -23,7 +18,7 @@ public class MapGenerator implements IMapGenerator {
 
     @Override
     public void createMap() {
-        board = new Board("DefaultMap", 10, 10, false);
+        board = new Board("DefaultMap", 6, 10, true);
         TileLayoutStrategy tileLayoutStrategy = new DefaultTilePlacement();
         tileLayoutStrategy.placeTiles(board, tileFactory);
     }
@@ -36,27 +31,14 @@ public class MapGenerator implements IMapGenerator {
     }
 
     @Override
-    public void loadSavedMap(File file) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        BoardData boardData = mapper.readValue(file, BoardData.class);
-        board = new Board(boardData.getMapName(), boardData.getMapRows(), boardData.getMapCols(),
-                boardData.isProtected());
-        for (TileData tileData : boardData.getTiles()) {
-            Tile tile = new Tile(tileData.getName(), ETileType.valueOf(tileData.getType()),
-                    new Point(tileData.getX(), tileData.getY()), tileData.getColor());
-            board.setTile(tileData.getX(), tileData.getY(), tile);
-        }
-    }
-
-    @Override
     public void resetMap() {
         TileLayoutStrategy tileLayoutStrategy = new DefaultTilePlacement();
         tileLayoutStrategy.placeTiles(board, tileFactory);
     }
 
     @Override
-    public void resetMap(String name, int width, int height, boolean isProtected) {
-        board = new Board(name, width, height, isProtected);
+    public void resetMap(String name, int width, int height) {
+        board = new Board(name, width, height, false);
         TileLayoutStrategy tileLayoutStrategy = new DefaultTilePlacement();
         tileLayoutStrategy.placeTiles(board, tileFactory);
     }
@@ -68,5 +50,11 @@ public class MapGenerator implements IMapGenerator {
 
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    public void loadSavedMap(File file) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadSavedMap'");
     }
 }
