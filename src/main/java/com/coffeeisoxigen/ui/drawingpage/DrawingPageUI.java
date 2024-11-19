@@ -4,9 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EnumMap;
+import java.util.Map;
 
 import com.coffeeisoxigen.controller.BoardController;
 import com.coffeeisoxigen.model.board.Board;
+import com.coffeeisoxigen.model.tile.ETileType;
+import com.coffeeisoxigen.model.tile.Tile;
 
 public class DrawingPageUI extends JFrame {
     private MapPanel mapPanel;
@@ -61,12 +65,32 @@ public class DrawingPageUI extends JFrame {
         int height = Integer.parseInt(controlPanel.getHeightField().getText());
         boardController.createCustomMap(name, width, height);
         mapPanel.renderTiles();
-        legendPanel.updateTotalTiles(boardController.getTotalTiles());
+        updateLegendPanel();
     }
 
     private void resetMap() {
         boardController.resetMap();
         mapPanel.renderTiles();
-        legendPanel.updateTotalTiles(boardController.getTotalTiles());
+        updateLegendPanel();
+    }
+
+    private void updateLegendPanel() {
+        Board board = boardController.getBoard();
+        if (board == null) {
+            return;
+        }
+
+        Map<ETileType, Integer> tileTypeCounts = new EnumMap<>(ETileType.class);
+        for (ETileType type : ETileType.values()) {
+            tileTypeCounts.put(type, 0);
+        }
+
+        for (Tile tile : board.getTiles().values()) {
+            ETileType type = tile.getTileType();
+            tileTypeCounts.put(type, tileTypeCounts.get(type) + 1);
+        }
+
+        legendPanel.updateTotalTiles(board.getWidth() * board.getHeight());
+        legendPanel.updateTileTypeCount(tileTypeCounts);
     }
 }

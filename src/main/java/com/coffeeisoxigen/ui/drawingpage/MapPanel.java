@@ -1,5 +1,6 @@
 package com.coffeeisoxigen.ui.drawingpage;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.coffeeisoxigen.controller.BoardController;
 import com.coffeeisoxigen.model.board.Board;
@@ -36,9 +38,22 @@ public class MapPanel extends JPanel {
                 Tile tile = tiles.get(new Point(x, y));
                 if (tile != null) {
                     JPanel tilePanel = new JPanel();
-                    tilePanel.setBackground(Color.decode(tile.getColor()));
+                    tilePanel.setBackground(tile.getTileType().getDefaultColor());
                     tilePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                    tilePanel.add(new JLabel(tile.getName()));
+                    tilePanel.setLayout(new BorderLayout());
+
+                    JLabel nameLabel = new JLabel(tile.getName());
+                    nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    tilePanel.add(nameLabel, BorderLayout.NORTH);
+
+                    JLabel coordLabel = new JLabel("(" + x + ", " + y + ")");
+                    coordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    tilePanel.add(coordLabel, BorderLayout.CENTER);
+
+                    JLabel typeLabel = new JLabel(tile.getTileType().toString());
+                    typeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    tilePanel.add(typeLabel, BorderLayout.SOUTH);
+
                     add(tilePanel);
                 }
             }
